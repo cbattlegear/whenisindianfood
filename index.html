@@ -1,0 +1,221 @@
+<html>
+	<head>
+		<style>
+			#center{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-ms-transform: translate(-50%, -50%);
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+			}
+		
+			#title{
+				font-family: sans-serif;
+				text-align: center;
+				font-size: 30px;
+			}
+			
+			#rightnow{
+				font-family: sans-serif;
+				text-align: center;
+				font-size: 75px;
+				color: black;
+			}
+			
+			#clockdiv{
+				font-family: sans-serif;
+				color: #fff;
+				font-weight: 100;
+				text-align: center;
+				font-size: 95px;
+			}
+
+			#clockdiv > div{
+				padding: 10px;
+				border-radius: 3px;
+				background: #aaaaaa;
+				display: inline-block;
+				margin: 5px;
+			}
+
+			#clockdiv div > span{
+				padding: 15px;
+				border-radius: 3px;
+				background: #333333;
+				display: inline-block;
+			}
+
+			.smalltext{
+				padding-top: 5px;
+				font-size: 30px;
+			}
+			
+			.pulsebody {
+				-webkit-animation: pulse 5s ease-in-out infinite alternate;
+				animation: pulse 5s ease-in-out infinite alternate;
+			}
+			@-webkit-keyframes pulse {
+				0% {
+					background: red;
+				}
+				17% {
+					background: orange;
+				}
+				34% {
+					background: yellow;
+				}
+				51% {
+					background: green;
+				}
+				68% {
+					background: blue;
+				}
+				85% {
+					background: indigo;
+				}
+				100% {
+					background: violet;
+				}
+			}
+			@keyframes pulse {
+				0% {
+					background: red;
+				}
+				17% {
+					background: orange;
+				}
+				34% {
+					background: yellow;
+				}
+				51% {
+					background: green;
+				}
+				68% {
+					background: blue;
+				}
+				85% {
+					background: indigo;
+				}
+				100% {
+					background: violet;
+				}
+			}
+    </style>
+	</head>
+	<body>
+		<div id="center">
+			<div id="title">
+				<h1>When is Indian Food?</h1>
+			</div>
+			<div id="clockdiv">
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		function isTime(){
+			var now = new Date();
+			return (now.getDay() === 2 && (now.getHours() >= 11 && now.getHours() <= 12));
+		}
+		
+		function nextTuesday(){
+			var now = new Date();
+			var T;
+			if(now.getDay() == 2 && now.getHours() >= 13) {
+				T = new Date();
+				T.setDate(T.getDate() + 7);
+				T.setHours(11, 00, 00);
+			}else if(now.getDay() == 2) {
+				T = new Date();
+				T.setHours(11, 00, 00);
+			} else {
+				T = new Date( now.getFullYear(), 
+                            now.getMonth(), 
+                            now.getDate() + ( now.getDay() <= 2 ? 2 : 9 ) - now.getDay() );
+				T.setHours(11, 00, 00);
+			}
+			
+			return T; // return what you need
+		}
+		
+		function indianFoodTime(id) {
+			if(timeinterval) {
+				clearInterval(timeinterval);
+			}
+			var clock = document.getElementById(id);
+			clock.innerHTML = '<h1 id="rightnow">RIGHT NOW!</h1>';
+			document.body.className = "pulsebody";
+			changecolors();
+		}
+		
+		var timeinterval;
+		var changeinterval;
+		
+		var deadline = nextTuesday();
+					
+		function getTimeRemaining(endtime) {
+		  var t = Date.parse(endtime) - Date.parse(new Date());
+		  var seconds = Math.floor((t / 1000) % 60);
+		  var minutes = Math.floor((t / 1000 / 60) % 60);
+		  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+		  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+		  return {
+			'total': t,
+			'days': days,
+			'hours': hours,
+			'minutes': minutes,
+			'seconds': seconds
+		  };
+		}
+
+		function initializeClock(id, endtime) {
+			if(changeinterval){
+				clearInterval(changeinterval);
+			}
+			document.body.className = "";
+			document.body.style.background = "white";
+		  var clock = document.getElementById(id);
+		  clock.innerHTML = '<div><span class="days"></span><div class="smalltext">Days</div></div><div><span class="hours"></span><div class="smalltext">Hours</div></div><div><span class="minutes"></span><div class="smalltext">Minutes</div></div><div><span class="seconds"></span><div class="smalltext">Seconds</div></div>';
+		  var daysSpan = clock.querySelector('.days');
+		  var hoursSpan = clock.querySelector('.hours');
+		  var minutesSpan = clock.querySelector('.minutes');
+		  var secondsSpan = clock.querySelector('.seconds');
+
+		  function updateClock() {
+			var t = getTimeRemaining(endtime);
+
+			daysSpan.innerHTML = t.days;
+			hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+			minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+			secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+			if (t.total <= 0) {
+			  clearInterval(timeinterval);
+			  indianFoodTime('clockdiv')
+			}
+		  }
+
+		  updateClock();
+		  timeinterval = setInterval(updateClock, 1000);
+		}
+		
+		if(isTime()){
+			indianFoodTime('clockdiv');
+		} else {
+			initializeClock('clockdiv', deadline);
+		}
+		function changecolors() {
+			changeinterval = setInterval(change, 1000);
+		}
+
+		function change() {
+			if(!(isTime())) {
+				deadline = nextTuesday();
+				initializeClock('clockdiv', deadline);
+			}
+		}
+
+//changecolors();
+		</script>
+	</body>
+</html>
