@@ -1,6 +1,11 @@
 <html>
 	<head>
+		<title>When is Indian Food?</title>
 		<style>
+			body{
+				margin: 0;
+			}
+			
 			#center{
 				position: absolute;
 				top: 50%;
@@ -8,6 +13,13 @@
 				-ms-transform: translate(-50%, -50%);
 				-webkit-transform: translate(-50%, -50%);
 				transform: translate(-50%, -50%);
+			}
+			
+			#theme{
+				height: 100vh;
+				background-image: url("theme/christmas.png");
+				background-position: left bottom;
+				background-repeat: repeat-x;
 			}
 		
 			#title{
@@ -104,11 +116,13 @@
     </style>
 	</head>
 	<body>
-		<div id="center">
-			<div id="title">
-				<h1>When is Indian Food?</h1>
-			</div>
-			<div id="clockdiv">
+		<div id="theme">
+			<div id="center">
+				<div id="title">
+					<h1>When is Indian Food?</h1>
+				</div>
+				<div id="clockdiv">
+				</div>
 			</div>
 		</div>
 		
