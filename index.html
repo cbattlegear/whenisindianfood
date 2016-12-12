@@ -15,8 +15,25 @@
 				transform: translate(-50%, -50%);
 			}
 			
-			#theme{
+			#video{
+				position: absolute;
 				height: 100vh;
+				width: 100vw;
+				text-align: center;
+			}
+			
+			#player{ 
+				width: 100vw;
+				height: 99%;
+				float: left;
+				display: none;
+			}
+			
+			#theme{
+				float: left;
+				position: absolute;
+				height: 100vh;
+				width: 100vw;
 				background-image: url("theme/christmas.png");
 				background-position: left bottom;
 				background-repeat: repeat-x;
@@ -32,8 +49,8 @@
 			#rightnow{
 				font-family: sans-serif;
 				text-align: center;
-				font-size: 65px;
-				font-size: 3vw;
+				font-size: 80px;
+				font-size: 5vw;
 				color: black;
 			}
 			
@@ -120,17 +137,27 @@
     </style>
 	</head>
 	<body>
-		<div id="theme">
-			<div id="center">
-				<div id="title">
-					<h1>When is Indian Food?</h1>
-				</div>
-				<div id="clockdiv">
+		<div id="video">
+			<video autoplay loop id="player" class="video-js vjs-default-skin">
+				<source type="video/webm" src="background/dance.webm">
+				<source type="video/mp4" src="background/dance.mp4">
+			</video>
+			<div id="theme">
+				<div id="center">
+					<div id="title">
+						<h1>When is Indian Food?</h1>
+					</div>
+					<div id="clockdiv">
+					</div>
 				</div>
 			</div>
 		</div>
 		
 		<script type="text/javascript">
+		// From http://stackoverflow.com/a/21210643 split out get params
+		var queryDict = {};
+		location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
+		
 		function isTime(){
 			var now = new Date();
 			return (now.getDay() === 2 && (now.getHours() >= 11 && now.getHours() <= 12));
@@ -163,6 +190,9 @@
 			var clock = document.getElementById(id);
 			clock.innerHTML = '<h1 id="rightnow">RIGHT NOW!</h1>';
 			document.body.className = "pulsebody";
+			if(typeof queryDict["public"] == 'undefined') {
+				document.getElementById("player").style.display="block";
+			}
 			changecolors();
 		}
 		
@@ -192,6 +222,9 @@
 			}
 			document.body.className = "";
 			document.body.style.background = "white";
+			if(typeof queryDict["public"] == 'undefined') {
+				document.getElementById("player").style.display="none";
+			}
 		  var clock = document.getElementById(id);
 		  clock.innerHTML = '<div><span class="days"></span><div class="smalltext">Days</div></div><div><span class="hours"></span><div class="smalltext">Hours</div></div><div><span class="minutes"></span><div class="smalltext">Minutes</div></div><div><span class="seconds"></span><div class="smalltext">Seconds</div></div>';
 		  var daysSpan = clock.querySelector('.days');
