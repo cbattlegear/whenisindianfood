@@ -46,6 +46,10 @@
 				font-size: 2vw;
 			}
 			
+			#homegame{
+				font-family: sans-serif;
+			}
+			
 			#rightnow{
 				font-family: sans-serif;
 				text-align: center;
@@ -153,6 +157,9 @@
 				<source type="video/mp4" src="background/dance.mp4">
 			</video>
 			<div id="theme">
+				<div style="display: none" id="homegame">
+                                	<h2>Get a copy of the home game at whenisindianfood.azurewebsites.net!</h2>
+	                        </div>
 				<div id="center">
 					<div id="title">
 						<h1>When is Indian Food?</h1>
@@ -168,6 +175,10 @@
 		var queryDict = {};
 		location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
 		
+		if(queryDict["public"] == 1) {
+                	document.getElementById("homegame").style.display="block";
+                }
+
 		function isTime(){
 			var now = new Date();
 			return (now.getDay() === 2 && (now.getHours() >= 11 && now.getHours() <= 12));
@@ -265,6 +276,7 @@
 		} else {
 			initializeClock('clockdiv', deadline);
 		}
+
 		function changecolors() {
 			changeinterval = setInterval(change, 1000);
 		}
