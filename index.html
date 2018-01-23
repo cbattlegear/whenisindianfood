@@ -187,7 +187,7 @@
 		function nextTuesday(){
 			var now = new Date();
 			var T;
-			if(now.getDay() == 2 && now.getHours() >= 13) {
+			/* if(now.getDay() == 2 && now.getHours() >= 13) {
 				T = new Date();
 				T.setDate(T.getDate() + 7);
 				T.setHours(11, 00, 00);
@@ -199,11 +199,8 @@
                             now.getMonth(), 
                             now.getDate() + ( now.getDay() <= 2 ? 2 : 9 ) - now.getDay() );
 				T.setHours(11, 00, 00);
-			}
-			T = new Date();
-			T.setMonth(2);
-			T.setDate(5);
-			T.setHours(8, 00, 00);
+			} */
+			T = new Date('February 5, 2018 08:00:00');
 			return T; // return what you need
 		}
 		
