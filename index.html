@@ -162,7 +162,7 @@
 	                        </div>
 				<div id="center">
 					<div id="title">
-						<h1>When is Indian Food?</h1>
+						<h1>When Does Travis Leave?</h1>
 					</div>
 					<div id="clockdiv">
 					</div>
@@ -181,7 +181,7 @@
 
 		function isTime(){
 			var now = new Date();
-			return (now.getDay() === 2 && (now.getHours() >= 11 && now.getHours() <= 12));
+			return (now.getMonth() === 2 && now.getDay() === 5 && now.getHours() >= 8);
 		}
 		
 		function nextTuesday(){
@@ -200,7 +200,10 @@
                             now.getDate() + ( now.getDay() <= 2 ? 2 : 9 ) - now.getDay() );
 				T.setHours(11, 00, 00);
 			}
-			
+			T = new Date();
+			T.setMonth(2);
+			T.setDate(5);
+			T.setHours(8, 00, 00);
 			return T; // return what you need
 		}
 		
